@@ -1,4 +1,4 @@
-# Guide: Migrating Metadata from FairDataPoint 1 to FairDataPoint 2
+# How to migrate metadata and configuration from one FDP instance to another (e.g., changing base URIs).
 
 ## Requirements
 - Docker Compose v2+
