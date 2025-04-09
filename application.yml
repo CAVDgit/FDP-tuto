@@ -1,0 +1,28 @@
+# application.yml
+instance:
+    clientUrl: https://ehds.sandbox.com
+    # persistentUrl: http://10.5.8.138:8080
+
+security:
+    jwt:
+        token:
+            secret-key: <128 character to be enter>
+
+repository:
+    type: 4
+    graphDb:
+        url: http://graphdb:7200
+        repository: fdp-store
+
+spring:
+    data:
+        mongodb:
+            uri: mongodb://mongo:27017/fdp
+
+
+ping:
+    enabled: false
+
+metadataProperties: {}
+
+metadataMetrics: {}
