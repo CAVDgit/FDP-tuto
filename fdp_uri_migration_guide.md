@@ -1,4 +1,4 @@
-# How to migrate metadata and configuration from one FDP instance to another (e.g., changing base URIs).
+# How to migrate metadata from one FDP instance to another (e.g., changing base URIs).
 
 ## Requirements
 - Docker Compose v2+
