@@ -111,5 +111,3 @@ https://ehds.sandbox.com
    - All metadata records should now use the new URI structure.
 
 ---
-
-Let me know if you want a companion script for the URI replacement or need help handling MongoDB user data migration.
