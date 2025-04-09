@@ -1,0 +1,54 @@
+services:
+
+  fdp:
+      container_name: fdp
+      image: fairdata/fairdatapoint:1.16
+      volumes:
+          - ./application.yml:/fdp/application.yml:ro
+      restart: unless-stopped
+
+  fdp-client:
+      container_name: fdp-client
+      image: fairdata/fairdatapoint-client:1.16
+      ports:
+          - 80:80
+      environment:
+          - FDP_HOST=fdp
+      restart: unless-stopped
+
+  mongo:
+      container_name: mongo
+      image: mongo:4.0.12
+      ports:
+          - 27017:27017
+      volumes:
+          - ./mongo/data:/data/db
+      restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express:0.54
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+
+  graphdb:
+    container_name: graphdb
+    image: ontotext/graphdb:10.7.4
+    restart: unless-stopped
+    environment:
+      GDB_JAVA_OPTS: >-
+        -Xmx4g -Xms4g
+        -Dgraphdb.home=/opt/graphdb/home
+        -Dgraphdb.workbench.importDirectory=/opt/graphdb/home/graphdb-import
+        -Dgraphdb.workbench.cors.enable=true
+    ports:
+      - 7200:7200
+      - 7300:7300
+    volumes:
+      - ./graphdb-data:/opt/graphdb/home
