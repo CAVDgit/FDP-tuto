@@ -39,11 +39,9 @@ instance:
    `http://<ip_of_fdp1>:7200`
 
 2. Go to **Explore > Graphs Overview**  
-   - Look for metadata graphs starting with:  
-     `http://192.168.1.37:8100/dataset/...`
 
 3. Export all metadata:
-   - Go to **Export > Export Repository**
+   - Click **Export Repository**
    - Choose format: **JSON-LD**
    - Select option: **`..#expanded`**
    - ⚠️ *Do not use Turtle format — it does not preserve the full graph structure*
