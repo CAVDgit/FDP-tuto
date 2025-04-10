@@ -25,17 +25,18 @@ services:
           - ./mongo/data:/data/db
       restart: unless-stopped
 
-  mongo-express:
-    image: mongo-express:0.54
-    container_name: mongo-express
-    restart: unless-stopped
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: admin
+  # Mongo express is used to have a GUI interface to connect to the MongoDB FDP database
+  # mongo-express:
+  #  image: mongo-express:0.54
+  #  container_name: mongo-express
+  #  restart: unless-stopped
+  #  ports:
+  #    - 8081:8081
+  #  environment:
+  #    ME_CONFIG_MONGODB_SERVER: mongo
+  #    ME_CONFIG_MONGODB_PORT: 27017
+  #    ME_CONFIG_BASICAUTH_USERNAME: admin
+  #    ME_CONFIG_BASICAUTH_PASSWORD: admin
 
   graphdb:
     container_name: graphdb
