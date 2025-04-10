@@ -1,15 +1,11 @@
-# How to migrate metadata from one FDP instance to another (e.g., changing base URIs).
+
+# How to migrate metadata from one FDP instance to another (e.g., changing base URIs)
 
 ## Requirements
 - Docker Compose v2+
 - FairDataPoint v1.16
+- MongoDB v4
 - GraphDB with a repository named `fdp-store`
-
----
-
-## Limitations
-- FairDataPoint requires a MongoDB database to manage user login information.
-- This guide **does not cover** updating the MongoDB database with the new URI structure. That step is **required** for fully migrating users to the new FDP instance.
 
 ---
 
@@ -37,7 +33,7 @@ instance:
 
 ## Migration Steps
 
-### A. Export Metadata from FairDataPoint 1
+### A. Export RDF Metadata from FairDataPoint 1
 
 1. Access the **GraphDB GUI** of FDP1:  
    `http://<ip_of_fdp1>:7200`
@@ -51,12 +47,15 @@ instance:
    - Choose format: **JSON-LD**
    - Select option: **`..#expanded`**
    - ⚠️ *Do not use Turtle format — it does not preserve the full graph structure*
+   - This will download a file: `statements.jsonld`
 
-4. This will download a file: `statements.jsonld`
+4. Export the MongoDB database:
+   - In the root folder where FairDataPoint 1 is deployed (where the MongoDB volume is defined in `docker-compose.yml`), locate the `/mongo` folder.
+   - Copy this folder to the future deployment directory of FairDataPoint 2.
 
 ---
 
-### B. Update URIs in the Backup File
+### B. Update URIs in the RDF Backup
 
 1. Open `statements.jsonld` in a text editor.
 
@@ -72,11 +71,46 @@ with:
 https://ehds.sandbox.com
 ```
 
-3. Save the modified file as: `new_statements.jsonld`
+3. Save the modified file as `new_statements.jsonld`.
 
 ---
 
-### C. Prepare and Deploy FairDataPoint 2
+### C. Update URIs in the MongoDB Metadata
+
+1. Go to the root folder of FairDataPoint 2 (where the new MongoDB container will be deployed).
+
+2. Start the MongoDB container:
+   ```bash
+   docker compose up -d mongo
+   ```
+
+3. Create a new script file:
+   ```bash
+   nano migrate_mongo_uri.sh
+   ```
+
+4. Paste the migration script (see below) and update the configuration section:
+
+```bash
+OLD_URI="http://192.168.1.37:8100"
+NEW_URI="https://ehds.sandbox.com"
+```
+
+5. Make it executable:
+   ```bash
+   chmod +x migrate_mongo_uri.sh
+   ```
+
+6. Execute the script to update all `uri` values in the metadata collection:
+   ```bash
+   ./migrate_mongo_uri.sh
+   ```
+
+7. All URIs in MongoDB should now be updated to reflect the new FDP base URI.
+
+---
+
+### D. Upload Updated RDF Metadata to the New GraphDB
 
 1. Go to the directory where FDP2 will be deployed (contains `docker-compose.yml` and `application.yaml`).
 
@@ -85,12 +119,12 @@ https://ehds.sandbox.com
    docker compose up -d graphdb
    ```
 
-3. Access the GraphDB GUI of FDP2:  
+3. Access the GraphDB GUI for FDP2:  
    `http://<ip_of_fdp2>:7200`
 
 4. Create a new repository: `fdp-store`
 
-5. Import the updated metadata:
+5. Import the updated RDF metadata:
    - Go to **Import > Upload RDF Files**
    - Upload `new_statements.jsonld`
    - Under **Target Graph**, tick the checkbox for **"From Data"**
@@ -101,13 +135,18 @@ https://ehds.sandbox.com
    - Ensure you see URIs starting with:  
      `https://ehds.sandbox.com/dataset/...`
 
-7. Deploy FairDataPoint 2 and other services:
+---
+
+### E. Deploy FairDataPoint 2 Server and Client
+
+1. Deploy FairDataPoint 2 and all related services:
    ```bash
    docker compose up -d
    ```
 
-8. Access FairDataPoint 2:  
-   `http://<ip_of_fdp2>:8080` *(adjust if using a different port)*  
-   - All metadata records should now use the new URI structure.
+2. Access FairDataPoint 2:  
+   `http://<ip_of_fdp2>:8080` *(adjust if using a different port)*
+
+3. All metadata records should now reflect the new URI structure, and previously associated user data should be preserved.
 
 ---
