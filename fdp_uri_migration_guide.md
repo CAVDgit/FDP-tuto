@@ -89,7 +89,7 @@ https://ehds.sandbox.com
    nano migrate_mongo_uri.sh
    ```
 
-4. Paste the migration script (see below) and update the configuration section:
+4. Paste the migration script (see in this github) and update the configuration section:
 
 ```bash
 OLD_URI="http://192.168.1.37:8100"
