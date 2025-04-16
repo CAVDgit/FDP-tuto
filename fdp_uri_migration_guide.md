@@ -4,8 +4,8 @@
 ## Requirements
 - Docker Compose v2+
 - FairDataPoint v1.16
-- MongoDB v4
-- GraphDB with a repository named `fdp-store`
+- MongoDB v4.0–4.2 with mapped ports outside the container
+- GraphDB 10.7.4
 
 ---
 
@@ -18,6 +18,16 @@ Running with the following `application.yaml`:
 ```yaml
 instance:
   clientUrl: http://192.168.1.37:8100 # Current URI structure
+```
+Note: If the security.jwt.token.secret-key is defined in application.yaml, the same secret must be used in both the source and target FDP instances. This ensures that JWT tokens are compatible across environments and users can authenticate successfully after migration.
+
+Be sure to use the same secret key string in both configurations when migrating data.
+
+```yaml
+security:
+  jwt:
+    token:
+      secret-key: <random 128 characters string>
 ```
 
 ### FairDataPoint 2
