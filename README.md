@@ -6,7 +6,7 @@ This repository provides step-by-step tutorials and practical guides for managin
 
 ## 📚 Contents
  
-- [How to migrate metadata from one FDP instance to another (e.g., changing base URIs)](tutorials/migrate-metadata-between-fdp.md)
+- [How to migrate metadata from one FDP instance to another (e.g., changing base URIs)](fdp_uri_migration_guide.md)
 
 ---
 
