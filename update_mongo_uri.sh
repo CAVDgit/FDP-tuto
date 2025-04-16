@@ -11,8 +11,8 @@ USERNAME=""                  # Leave empty to skip auth
 PASSWORD=""                  # Leave empty to skip auth
 AUTH_DB="admin"
 
-OLD_URI="http://192.168.1.37:8100"
-NEW_URI="https://ehds.sandbox.com:443"
+OLD_URI="http://192.168.1.37:8100" # important add the port even if it is http or https :80 or :443
+NEW_URI="https://ehds.sandbox.com:443" # important add the port even if it is http or https :80 or :443
 
 # -----------------------
 
