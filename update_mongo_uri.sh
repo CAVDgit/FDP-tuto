@@ -4,14 +4,15 @@
 
 CONTAINER_NAME="mongo"       # Docker container name
 DB_NAME="fdp"                # MongoDB database name
-COLLECTION_NAME="metadata"  # Collection to update
+COLLECTION_METADATA="metadata"
+COLLECTION_ACL="ACL"
 
 USERNAME=""                  # Leave empty to skip auth
 PASSWORD=""                  # Leave empty to skip auth
 AUTH_DB="admin"
 
-OLD_URI="http://192.168.1.37:8100"     # URI to replace
-NEW_URI="https://ehds.sandbox.com"     # New URI
+OLD_URI="http://192.168.1.37:8100"
+NEW_URI="https://ehds.sandbox.com:443"
 
 # -----------------------
 
@@ -46,11 +47,12 @@ version_compare() {
   }'
 }
 
-# Build the appropriate Mongo update command
+# Prepare update commands
 if version_compare "$VERSION_CLEAN" "4.2"; then
-  echo "📦 Using aggregation pipeline update"
+  echo "📦 Using aggregation pipeline updates"
+
   UPDATE_CMD="
-db.getCollection('$COLLECTION_NAME').updateMany(
+db.getCollection('$COLLECTION_METADATA').updateMany(
   { uri: { \$regex: '^$OLD_URI' } },
   [
     {
@@ -65,16 +67,41 @@ db.getCollection('$COLLECTION_NAME').updateMany(
       }
     }
   ]
+);
+db.getCollection('$COLLECTION_ACL').updateMany(
+  { instanceId: { \$regex: '^$OLD_URI' } },
+  [
+    {
+      \$set: {
+        instanceId: {
+          \$replaceOne: {
+            input: '\$instanceId',
+            find: '$OLD_URI',
+            replacement: '$NEW_URI'
+          }
+        }
+      }
+    }
+  ]
 );"
+
 else
-  echo "🧱 Using classic update with replaceOne"
+  echo "🧱 Using classic updates with replaceOne"
+
   UPDATE_CMD="
-db.getCollection('$COLLECTION_NAME').find({ uri: { \$regex: '^$OLD_URI' } }).forEach(function(doc) {
+db.getCollection('$COLLECTION_METADATA').find({ uri: { \$regex: '^$OLD_URI' } }).forEach(function(doc) {
   doc.uri = doc.uri.replace('$OLD_URI', '$NEW_URI');
-  db.getCollection('$COLLECTION_NAME').replaceOne({ _id: doc._id }, doc);
+  db.getCollection('$COLLECTION_METADATA').replaceOne({ _id: doc._id }, doc);
+});
+db.getCollection('$COLLECTION_ACL').find({ instanceId: { \$regex: '^$OLD_URI' } }).forEach(function(doc) {
+  doc.instanceId = doc.instanceId.replace('$OLD_URI', '$NEW_URI');
+  db.getCollection('$COLLECTION_ACL').replaceOne({ _id: doc._id }, doc);
 });"
 fi
 
-# Run the command
-echo "🚀 Running MongoDB update..."
+# Run both updates together
+echo "🚀 Running MongoDB updates in both collections..."
 docker exec -i "$CONTAINER_NAME" mongo "$DB_NAME" $AUTH_OPTS --quiet --eval "$UPDATE_CMD"
+
+# ✅ Final message
+echo "✅ All updates completed successfully!"
