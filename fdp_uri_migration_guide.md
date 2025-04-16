@@ -27,7 +27,7 @@ Be sure to use the same secret key string in both configurations when migrating 
 security:
   jwt:
     token:
-      secret-key: <random 128 characters string>
+      secret-key: <random 128 characters string> # Should be the same for both FairDataPoint 1 & 2
 ```
 
 ### FairDataPoint 2
