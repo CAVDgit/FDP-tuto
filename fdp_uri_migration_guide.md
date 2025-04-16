@@ -47,13 +47,15 @@ instance:
    - ⚠️ *Do not use Turtle format — it does not preserve the full graph structure*
    - This will download a file: `statements.jsonld`
 
-4. Export the MongoDB database:
-   - In the root folder where FairDataPoint 1 is deployed (where the MongoDB volume is defined in `docker-compose.yml`), locate the `/mongo` folder.
-   - Copy this folder to the future deployment directory of FairDataPoint 2.
+---
+### B. Export the MongoDB database from FairDataPoint 1
+
+1. In the root folder where FairDataPoint 1 is deployed (where the MongoDB volume is defined in `docker-compose.yml`), locate the `/mongo` folder.
+2. Copy this folder to the future deployment directory of FairDataPoint 2.
 
 ---
 
-### B. Update URIs in the RDF Backup
+### C. Update URIs in the RDF Backup
 
 1. Open `statements.jsonld` in a text editor.
 
@@ -73,7 +75,7 @@ https://ehds.sandbox.com
 
 ---
 
-### C. Update URIs in the MongoDB Metadata
+### D. Update URIs in the MongoDB Metadata
 
 1. Go to the root folder of FairDataPoint 2 (where the new MongoDB container will be deployed).
 
@@ -108,7 +110,7 @@ NEW_URI="https://ehds.sandbox.com"
 
 ---
 
-### D. Upload Updated RDF Metadata to the New GraphDB
+### E. Upload Updated RDF Metadata to the New GraphDB
 
 1. Go to the directory where FDP2 will be deployed (contains `docker-compose.yml` and `application.yaml`).
 
@@ -135,7 +137,7 @@ NEW_URI="https://ehds.sandbox.com"
 
 ---
 
-### E. Deploy FairDataPoint 2 Server and Client
+### F. Deploy FairDataPoint 2 Server and Client
 
 1. Deploy FairDataPoint 2 and all related services:
    ```bash
