@@ -68,7 +68,7 @@ http://192.168.1.37:8100
 with:
 
 ```
-https://ehds.sandbox.com
+https://ehds.sandbox.com:443
 ```
 
 3. Save the modified file as `new_statements.jsonld`.
@@ -93,7 +93,7 @@ https://ehds.sandbox.com
 
 ```bash
 OLD_URI="http://192.168.1.37:8100"
-NEW_URI="https://ehds.sandbox.com"
+NEW_URI="https://ehds.sandbox.com:443"
 ```
 
 5. Make it executable:
