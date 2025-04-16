@@ -20,7 +20,7 @@ services:
       container_name: mongo
       image: mongo:4.0.12
       ports:
-          - 27017:27017
+          - 27017:27017 # Need to expose the mongo container port to for editing purpose related to the script update_mongo_uri.sh
       volumes:
           - ./mongo/data:/data/db
       restart: unless-stopped
