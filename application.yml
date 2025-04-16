@@ -1,6 +1,6 @@
 # application.yml
 instance:
-    clientUrl: https://ehds.sandbox.com
+    clientUrl: https://ehds.sandbox.com:443 # important add the port even if it is http or https :80 or :443
     # persistentUrl: http://10.5.8.138:8080
 
 security:
