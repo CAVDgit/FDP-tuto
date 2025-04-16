@@ -26,7 +26,7 @@ Not yet deployed. Planned `application.yaml`:
 
 ```yaml
 instance:
-  clientUrl: https://ehds.sandbox.com # New desired URI structure
+  clientUrl: https://ehds.sandbox.com:443 # New desired URI structure
 ```
 
 ---
