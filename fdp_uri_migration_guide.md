@@ -155,7 +155,7 @@ NEW_URI="https://ehds.sandbox.com:443"
    ```
 
 2. Access FairDataPoint 2:  
-   `http://<ip_of_fdp2>:8080` *(adjust if using a different port)*
+   `https://ehds.sandbox.com:443`
 
 3. All metadata records should now reflect the new URI structure, and previously associated user data should be preserved.
 
