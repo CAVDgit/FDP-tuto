@@ -17,7 +17,7 @@ Running with the following `application.yaml`:
 
 ```yaml
 instance:
-  clientUrl: http://192.168.1.37:8100 # Current URI structure
+  clientUrl: http://192.168.1.37:80 # Current URI structure
 ```
 Note: If the security.jwt.token.secret-key is defined in `application.yaml`, the same secret must be used in both the source and target FDP instances. This ensures that JWT tokens are compatible across environments and users can authenticate successfully after migration.
 
@@ -46,7 +46,7 @@ instance:
 ### A. Export RDF Metadata from FairDataPoint 1
 
 1. Access the **GraphDB GUI** of FDP1:  
-   `http://<ip_of_fdp1>:7200`
+   `http://<local_ip_of_fdp1>:7200`
 
 2. Go to **Explore > Graphs Overview**  
 
@@ -72,7 +72,7 @@ instance:
 2. Replace **all occurrences** of:
 
 ```
-http://192.168.1.37:8100
+http://192.168.1.37:80
 ```
 
 with:
@@ -102,7 +102,7 @@ https://ehds.sandbox.com:443
 4. Paste the migration script (see in this github) and update the configuration section:
 
 ```bash
-OLD_URI="http://192.168.1.37:8100"
+OLD_URI="http://192.168.1.37:80"
 NEW_URI="https://ehds.sandbox.com:443"
 ```
 
@@ -130,7 +130,7 @@ NEW_URI="https://ehds.sandbox.com:443"
    ```
 
 3. Access the GraphDB GUI for FDP2:  
-   `http://<ip_of_fdp2>:7200`
+   `http://<local_ip_of_fdp2>:7200`
 
 4. Create a new repository: `fdp-store`
 
@@ -155,7 +155,7 @@ NEW_URI="https://ehds.sandbox.com:443"
    ```
 
 2. Access FairDataPoint 2:  
-   `https://ehds.sandbox.com:443`
+   `http://<<local_ip_of_fdp2>>:80`
 
 3. All metadata records should now reflect the new URI structure, and previously associated user data should be preserved.
 
