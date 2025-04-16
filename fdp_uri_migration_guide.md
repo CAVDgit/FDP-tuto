@@ -19,7 +19,7 @@ Running with the following `application.yaml`:
 instance:
   clientUrl: http://192.168.1.37:8100 # Current URI structure
 ```
-Note: If the security.jwt.token.secret-key is defined in application.yaml, the same secret must be used in both the source and target FDP instances. This ensures that JWT tokens are compatible across environments and users can authenticate successfully after migration.
+Note: If the security.jwt.token.secret-key is defined in `application.yaml`, the same secret must be used in both the source and target FDP instances. This ensures that JWT tokens are compatible across environments and users can authenticate successfully after migration.
 
 Be sure to use the same secret key string in both configurations when migrating data.
 
