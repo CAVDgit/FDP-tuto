@@ -6,7 +6,7 @@ instance:
 security:
     jwt:
         token:
-            secret-key: <128 character to be enter>
+            secret-key: <random 128 characters string>
 
 repository:
     type: 4
