@@ -5,9 +5,8 @@ This repository provides step-by-step tutorials and practical guides for managin
 ---
 
 ## 📚 Contents
-
-- `fdp_uri_migration_guide.md`  
-  ➤ How to migrate metadata and configuration from one FDP instance to another (e.g., changing base URIs).
+ 
+- [How to migrate metadata from one FDP instance to another (e.g., changing base URIs)](tutorials/migrate-metadata-between-fdp.md)
 
 ---
 
@@ -17,7 +16,6 @@ Before using these tutorials, you should have:
 
 - Basic understanding of RDF and the FAIR principles
 - Docker and Docker Compose (v2+)
-- GraphDB (Community or Enterprise)
 - A deployed or deployable instance of [FairDataPoint](https://github.com/FAIRDataTeam/FairDataPoint)
 
 ---
