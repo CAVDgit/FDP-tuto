@@ -13,6 +13,8 @@ repository:
     graphDb:
         url: http://graphdb:7200
         repository: fdp-store
+        # username: admin
+        # password: root
 
 spring:
     data:
